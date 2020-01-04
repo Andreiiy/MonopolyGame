@@ -1,0 +1,833 @@
+﻿<Window x:Class="Monopoly_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Monopoly_WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Closing="Window_Closing">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1.365"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1.776"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="5.5"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.332"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.927"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="2.5"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.856"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="label">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="2.667"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="rectangle">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.928"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="rectangle">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0.923"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="rectangle">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="-1.833"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="rectangle">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="-0.167"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Rectangle x:Name="rectangle" Stroke="{x:Null}" RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Rectangle.RenderTransform>
+                                <Rectangle.Fill>
+                                    <ImageBrush ImageSource="Image/briliant2.png"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content=""/>
+                            <Label x:Name="label" Content="Go" Margin="10,-5,9,15" VerticalAlignment="Bottom" FontSize="36" Height="58" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
+                                <Label.Foreground>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFF50C0C" Offset="0.769"/>
+                                        <GradientStop Color="#FF0E0101" Offset="0.998"/>
+                                    </LinearGradientBrush>
+                                </Label.Foreground>
+                                <Label.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-1.123"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Label.RenderTransform>
+                            </Label>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True"/>
+                            <Trigger Property="IsDefaulted" Value="True"/>
+                            <Trigger Property="IsMouseOver" Value="True"/>
+                            <Trigger Property="IsPressed" Value="True"/>
+                            <Trigger Property="IsEnabled" Value="False"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+
+    <Grid Background="Black">
+        <Border BorderBrush="#FFFBF9F9" BorderThickness="2" Margin="5,5,487.666,5" CornerRadius="5"/>
+        <Border BorderBrush="#FFFBF9F9" BorderThickness="2" Margin="0,5,10,5" CornerRadius="5" HorizontalAlignment="Right" Width="472.666"/>
+        <Grid Margin="14,15,495.333,14.667" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="128"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="128"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="128"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="6" Grid.ColumnSpan="7">
+                <DockPanel.Background>
+                    <ImageBrush ImageSource="Image/test.png"/>
+                </DockPanel.Background>
+
+            </DockPanel>
+
+
+            <DockPanel >
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5" RenderTransformOrigin="0.5,0.5">
+                    <Image x:Name="imgGo" Source="Image/Fields/start2.png" Stretch="Fill"></Image>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="1">
+                <Border x:Name="_1_1" BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+
+
+                    <Grid>
+                        <Label x:Name="f1"  RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2"  Foreground="White" Content="Free" FontSize="16" FontWeight="Bold" Padding="20,0,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="22">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image" Margin="1,22,0.333,22" Source="Image/porsche.png" Stretch="Fill"/>
+                        <Label x:Name="_01" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,0" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" Content="50000" FontSize="16" FontWeight="Bold" Padding="15,0,5,5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+
+
+
+
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="2">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f2" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="Free" Foreground="White" FontSize="16" FontWeight="Bold" Padding="15,0,5,5" Height="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image2" Margin="1,22,0.333,22" Source="Image/Fields/Lamborghini.png"/>
+                        <Label x:Name="_02" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,0" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" Foreground="#FFFEFEFE" Content="25000" Padding="15,0,5,0" ScrollViewer.CanContentScroll="True" FontWeight="Bold">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="3">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f3" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="Free" Foreground="White" FontSize="16" FontWeight="Bold" Padding="15,0,5,0" Height="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image3" Margin="1,22,0.333,22" Source="Image/Fields/BMW.gif"/>
+                        <Label x:Name="_03" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="35000" FontWeight="Bold" FontSize="16" Foreground="#FFFFF6F6" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="4">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image x:Name="chans1" Source="Image/Fields/chens13.jpg"></Image>
+
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="5">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f5" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Height="22" Width="71.3333333333333" Grid.Row="1" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image4" Margin="1,22,0.333,22" Source="Image/Fields/Manchester_United.png"/>
+                        <Label x:Name="_04" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="45000" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+
+            <DockPanel Grid.Column="6">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f6" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Content="Free" Foreground="#FFF9F9F9" Padding="15,0,5,0" Height="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image5" Margin="1,22,0.333,22" Source="Image/Fields/Arsenal.png"/>
+                        <Label x:Name="_05" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Content="30000" Foreground="White" Height="22" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="7">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f7" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image6" Margin="1,22,0.333,22" Source="Image/Fields/Chelsea.png"/>
+                        <Label x:Name="_06" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="#FFFBFBFB" FontSize="16" FontWeight="Bold" Content="25000" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/yelow.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8">
+                <Border x:Name="imgInjail" BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image Source="Image/Fields/injail.png" Stretch="Fill"></Image>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="1">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.924"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f9" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="Free" FontSize="16" FontWeight="Bold" Foreground="#FFFCFCFC" Padding="15,0,5,0" Height="23" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image9" Margin="-10,33,-10,35" Source="Image/Fields/amd.jpg" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-89.935"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil99" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" Content="65000" FontWeight="Bold" Foreground="#FFFAEDED" Padding="10,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="2">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.924"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f10" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="#FFFCF5F5" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image10" Margin="-11,33,-12,34" Source="Image/Fields/intel.jpg" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-90.057"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil010" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="#FFFCF4F4" Content="80000" Padding="10,0,3,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="3">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image x:Name="chans4" Source="Image/Fields/chens2.jpg"></Image>
+
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="4">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.924"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f12" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image12" Margin="-19,21,-19,23" Source="Image/Fields/acer.jpg" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-89.589"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="_012" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="40000" Padding="5,0,5,1">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="5">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.924"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f13" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="Free" FontWeight="Bold" FontSize="16" Foreground="#FFFAF5F5" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image13" Margin="-14,29,-11,31" Source="Image/Fields/asus.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-90.105"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil013" RenderTransformOrigin="0.5,0.5" Margin="0,102,0,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="#FFF6EDED" FontSize="16" FontWeight="Bold" Content="50000" Padding="5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="6">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="89.924"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f14" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image133" Margin="-8,32,-11,32.667" Source="Image/Fields/Lenovo_logo_black.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-89.913"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil939" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="30000" FontSize="16" FontWeight="Bold" Foreground="#FFF7F3F3" Padding="5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/green.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="7">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5"/>
+            </DockPanel>
+            <DockPanel Grid.Column="8" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image x:Name="imgFreeParking" Source="Image/Fields/Free-Parking.png" Stretch="Fill"></Image>
+                </Border>
+            </DockPanel>
+
+
+            <DockPanel Grid.Column="7" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f16" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Content="Free" Foreground="#FFFAF3F3" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image113" Margin="-5,26,-5.667,26" Source="Image/Fields/Nintendo.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="89.659"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil0113" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Content="60000" Foreground="#FFFFFCFC" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="6" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="59*"/>
+                        </Grid.RowDefinitions>
+                        <Label x:Name="f17" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" Grid.RowSpan="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image14" Margin="1,26,0,22" Source="Image/Fields/sony.jpg" Grid.Row="1" Stretch="Fill"/>
+                        <Label x:Name="fil014" Content="40000" RenderTransformOrigin="0.5,0.5" Margin="0,96.333,0,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Padding="15,0,5,0" FontSize="16" Grid.Row="1" Foreground="White" FontWeight="Bold">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="5" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f18" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image15" Margin="1,22,0.333,22" Source="Image/Fields/nvidia.jpg" Stretch="Fill"/>
+                        <Label x:Name="fil015" Content="35000" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Center" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/braun.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="4" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image x:Name="chans2" Source="Image/Fields/chens13.jpg"></Image>
+
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="3" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f20" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image17" Margin="1,22,0.333,22" Source="Image/Fields/Thomson.jpg"/>
+                        <Label x:Name="fil017" Content="15000" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Padding="15,0,5,0" FontSize="16" FontWeight="Bold" Foreground="White">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="2" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f21" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image18" Margin="1,27,0.333,29" Source="Image/Fields/panasonic.jpg" Stretch="Fill"/>
+                        <Label x:Name="fil018" Content="25000" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" Padding="15,0,5,0" FontSize="16" FontWeight="Bold">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Column="1" Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid>
+                        <Label x:Name="f22" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="Free" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image19" Margin="1,23,0.333,1" Source="Image/Fields/Philips.jpg" Stretch="Fill"/>
+                        <Label x:Name="fil019" Content="10000" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" FontSize="16" FontWeight="Bold" Padding="15,0,5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/red.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="8">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+
+                    <Image x:Name="imgGoToJain" Source="Image/Fields/goToJail2.png" Stretch="Fill"></Image>
+
+
+
+
+
+
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="7">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5"/>
+            </DockPanel>
+            <DockPanel  Grid.Row="6">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-89.424"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f24" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,102.667" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Padding="15,0,5,0" Content="Free" Foreground="White" Height="24" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image33ыарп39" Margin="4,22,3,21.667" Source="Image/Fields/Huawei2.png"/>
+                        <Label x:Name="fil93ыпр339" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" Padding="10,0,5,0" FontSize="16" FontWeight="Bold" Content="15000">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="5">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-89.424"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f25" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Padding="15,0,5,0" Foreground="White" Content="Free" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image3ыва339" Margin="1,22,0.333,22" Source="Image/Fields/aple.png"/>
+                        <Label x:Name="fil933вап39" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="35000" FontSize="16" FontWeight="Bold" Padding="10,0,5,0" Foreground="White" Height="23" VerticalAlignment="Bottom">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="4">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-89.424"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f26" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="White" Padding="15,0,5,0" FontSize="16" FontWeight="Bold" Content="Free" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image332339" Margin="-10,34,-11,36" Source="Image/Fields/samsung3.png" IsEnabled="False" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90.194"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil9333339" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" Foreground="#FFFBFBFB" FontSize="16" FontWeight="Bold" Padding="10,0,5,0" Content="20000">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/blue.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="3">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Image x:Name="chans3" Source="Image/Fields/chens4.jpg"></Image>
+
+                </Border>
+            </DockPanel>
+            <DockPanel  Grid.Row="2">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-89.424"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f28" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="Free" Padding="10,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/beg.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image33329" Margin="-10,33,-10,35" Source="Image/Fields/microsoft.png" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90.076"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil933239" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Content="10000" Foreground="#FFF6F1F1" Padding="5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/beg.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Row="1">
+                <Border BorderBrush="#FFFBF9F9" BorderThickness="2"  CornerRadius="5">
+                    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,-33" Width="60">
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-89.424"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+                        <Label x:Name="f29" RenderTransformOrigin="0.5,0.5" Margin="0,0,0.333,103" Panel.ZIndex="2" BorderBrush="{x:Null}" Content="Free" FontSize="16" FontWeight="Bold" Foreground="#FFFEFDFD" Padding="15,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/beg.jpg"/>
+                            </Label.Background>
+                        </Label>
+                        <Image x:Name="image3339" Margin="-9,36,-10,36" Source="Image/Fields/linux.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90.022"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Label x:Name="fil93339" RenderTransformOrigin="0.5,0.5" Margin="0,102,0.333,1" Panel.ZIndex="2" BorderBrush="{x:Null}" FontSize="16" FontWeight="Bold" Foreground="White" Content="90000" Padding="5,0">
+                            <Label.Background>
+                                <ImageBrush ImageSource="Image/backgraund/beg.jpg"/>
+                            </Label.Background>
+                        </Label>
+                    </Grid>
+                </Border>
+            </DockPanel>
+
+            <Image x:Name="kub1" Panel.ZIndex="1" Source="Image/Kub/6.png" Grid.Row="5" Grid.Column="6"></Image>
+            <Image x:Name="kub2" Panel.ZIndex="1" Source="Image/Kub/6.png" Grid.Row="5" Grid.Column="7"></Image>
+            <Border BorderBrush="#FFFBF9F9" Grid.Column="1" Grid.Row="5"  BorderThickness="2"  CornerRadius="5" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" Grid.ColumnSpan="3" Margin="0,27,57,5.667" HorizontalAlignment="Right" Width="159">
+                <Image x:Name="Imagechance" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="4"  Margin="8,4,3.667,4" Source="Image/Chance/Chance.png" RenderTransformOrigin="0.5,0.5" />
+            </Border>
+
+        </Grid>
+        <Canvas x:Name="canvas" x:FieldModifier="public" Grid.RowSpan="8" Grid.ColumnSpan="9" Height="640.666666666667">
+            <Image x:Name="red" Width="44" Height="42" Source="Image/Plaers/red.png" Canvas.Left="17" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" />
+            <Image x:Name="table" Width="166" Height="123" Source="Image/table.jpg" Canvas.Left="956" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" Canvas.Top="142" />
+
+            <Image x:Name="myPlayer" Width="90" Height="75" Source="Image/Plaers/player2.jpg" Canvas.Left="836" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" Canvas.Top="142" />
+            <Image x:Name="player2" Width="90" Height="75" Source="Image/Plaers/player3.jpg" Canvas.Left="1155" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" Canvas.Top="140" />
+            <Image x:Name="player3" Width="90" Height="75" Source="Image/Plaers/player1.jpg" Canvas.Left="999" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" Canvas.Top="297" />
+            <Image x:Name="bankir" Width="90" Height="75" Source="Image/Plaers/bankir.jpg" Canvas.Left="991" Panel.ZIndex="6" Stretch="Fill" RenderTransformOrigin="0.475,0.392" Canvas.Top="34" />
+
+
+            <Label Content="Banker" Canvas.Left="999" Canvas.Top="-2" Width="70" Height="31" Foreground="#FF15F315" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="manyBanker" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="1000000$" Canvas.Left="988" Canvas.Top="103" Width="92" Height="31" Foreground="#FF22F315" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lName" Content=""  HorizontalContentAlignment="Center" Canvas.Left="975" Canvas.Top="261" Width="148" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMoney" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" Canvas.Left="1037" Canvas.Top="387" Width="100" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lName2" Content=""  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="819" Canvas.Top="106" Width="145" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMoney3" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" Canvas.Left="1177" Canvas.Top="215" Width="92" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lName3" Content="" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Canvas.Left="1111" Canvas.Top="103" Width="153" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMoney2"  HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" Content="" Canvas.Left="877" Canvas.Top="213" Width="80" Height="31" Foreground="#FFF31515" FontSize="18" FontWeight="Bold"/>
+
+
+
+            <Image x:Name="green" Width="44" Height="42" Source="Image/Plaers/green.png" Canvas.Left="15" Panel.ZIndex="6" Stretch="Fill" Canvas.Top="86" />
+            <Image x:Name="yellow" Width="44" Height="42" Source="Image/Plaers/yellow.png" Canvas.Left="12" Panel.ZIndex="6" Stretch="Fill" Canvas.Top="44" />
+            <Button x:Name="btnStart"  Panel.ZIndex="1" Style="{DynamicResource ButtonStyle1}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" OpacityMask="#FF1818CD" BorderBrush="{x:Null}" Background="#FF1E00F9" Height="68" Width="78" Canvas.Left="190" Canvas.Top="89" Click="btnStart_Click">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="350" Y="350"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Label x:Name="label" Content="Money:" Canvas.Left="966" Canvas.Top="386" Height="35" Width="76" Background="{x:Null}" Foreground="#FFFAEEEE" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy" Content="Move:" Canvas.Left="965" Canvas.Top="418" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF7F0F0" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMove" Content="" Canvas.Left="1032" Canvas.Top="418" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy2" Content="Status:" Canvas.Left="967" Canvas.Top="449" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFAF3F3" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lStatus" Content="" Canvas.Left="1033" Canvas.Top="449" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy4" Content="Money:" Canvas.Left="1121" Canvas.Top="216" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFAFAFA" FontSize="16" FontWeight="Bold"/>
+            <Label x:Name="label_Copy5" Content="Money:" Canvas.Left="809" Canvas.Top="213" Height="35" Width="77" Background="Black" Foreground="White" FontSize="16" FontWeight="Bold"/>
+            <Label x:Name="lColor" Content="Red" Canvas.Left="1028" Canvas.Top="478" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy7" Content="Color:" Canvas.Left="968" Canvas.Top="477" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF6EBEB" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy1" Content="Move:" Canvas.Left="1121" Canvas.Top="245" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFAF3F3" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy3" Content="Move:" Canvas.Left="809" Canvas.Top="244" Height="35" Width="66" Background="{x:Null}" Foreground="White" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMove3" Content="" Canvas.Left="1189" Canvas.Top="245" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lMove2" Content="" Canvas.Left="872" Canvas.Top="245" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy6" Content="Status:" Canvas.Left="1123" Canvas.Top="275" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF5ECEC" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy8" Content="Status:" Canvas.Left="812" Canvas.Top="276" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFCFCFC" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lStatus3" Content="" Canvas.Left="1189" Canvas.Top="274" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lStatus2" Content="" Canvas.Left="874" Canvas.Top="274" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy9" Content="Color:" Canvas.Left="1122" Canvas.Top="307" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFFF9F9" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="label_Copy10" Content="Color:" Canvas.Left="812" Canvas.Top="303" Height="35" Width="66" Background="{x:Null}" Foreground="#FFFEFEFE" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lColor3" Content="" Canvas.Left="1189" Canvas.Top="310" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lColor2" Content="" Canvas.Left="872" Canvas.Top="301" Height="35" Width="66" Background="{x:Null}" Foreground="#FFF61010" FontSize="18" FontWeight="Bold"/>
+            <Label x:Name="lLost" Content="" Foreground="Red"  Canvas.Left="870" Canvas.Top="519" Height="109" Width="394" FontSize="72" FontWeight="Bold"/>
+
+            <ListBox x:Name="lbChat" Panel.ZIndex="+8" Width="0" Grid.Row="2"  Grid.Column="1"  Grid.ColumnSpan="2" FontWeight="Bold" FontFamily="Script MT Bold" Foreground="Red" Height="543" Canvas.Top="-3" Canvas.Left="868"   />
+            <TextBox x:Name="tbSendMsg"  Width="0" Grid.Column = "1" Grid.Row = "2"  TextWrapping = "Wrap" Text = "Send Message" Grid.ColumnSpan = "2" FontFamily = "Viner Hand ITC" Canvas.Left="868" Canvas.Top="547" Panel.ZIndex="8" Height="90" MinWidth="2" BorderBrush="{x:Null}" />
+            <Button x:Name="btnChat" Content="" Canvas.Left="1222" Canvas.Top="394" Width="47" RenderTransformOrigin="0.5,0.5" Height="117" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="BtnChat_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="Image/btnChat.png"/>
+                </Button.Background>
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.111"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Label x:Name="lGameOver" Background="Black" Panel.ZIndex="10" Content="Game Over" Height="277" VerticalAlignment="Top" Canvas.Top="155" Width="968" Canvas.Left="184" Foreground="#FFF51414" FontSize="172" FontWeight="Bold" FontStyle="Italic" BorderBrush="White"/>
+        </Canvas>
+    </Grid>
+</Window>
